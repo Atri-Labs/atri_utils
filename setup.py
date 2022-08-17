@@ -40,7 +40,7 @@ def get_git_tag():
 
     return git_tag
 
-NAME = "atri_utils"
+NAME = "atri-utils"
 
 VERSION = "1.0.0" if EDITABLE_BUILD else get_git_tag()[1:]
 
@@ -63,7 +63,7 @@ setuptools.setup(
     long_description=LONG_DESCRIPTION,
     url="https://atrilabs.com",
     project_urls={
-        "Source": "https://github.com/cruxcode/atrilabs-engine.git"
+        "Source": "https://github.com/Atri-Labs/atri_utils.git"
     },
     author="Atri Labs",
     author_email="shyam.swaroop@atrilabs.com",
