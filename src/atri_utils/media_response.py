@@ -63,7 +63,7 @@ def extract_from_bytes(file: bytes, encoding: str) -> str:
 def extract_from_path(file: Union[PosixPath, WindowsPath], encoding: str) -> str:
     return extract_from_filename(str(file), encoding)
 
-def create_image_response(
+def create_media_response(
     file: ACCEPTED_FILETYPES,
     mime_type: Union[str, None] = None,
     filename: Union[str, None] = None,

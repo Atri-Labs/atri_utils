@@ -1,1 +1,1 @@
-from .image_response import *
+from .media_response import *
