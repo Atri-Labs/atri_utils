@@ -78,8 +78,6 @@ def create_image_response(
     It returns None, if mime-type cannot be guessed/found.
     It returns None, if the type of file is unsupported.
     """
-    print(type(file))
-
     detected_mime_type = get_mime_type(mime_type, filename, file)
     print(detected_mime_type)
 
