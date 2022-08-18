@@ -9,6 +9,7 @@ from pathlib import PosixPath, WindowsPath
 ACCEPTED_FILETYPES = Union[BinaryIO, BufferedReader, TextIOWrapper, str, UploadFile, bytes, PosixPath, WindowsPath]
 
 def get_mime_type(mime_type: Union[str, None], filename: Union[str, None], file: ACCEPTED_FILETYPES) -> str:
+    # guard - Do not auto-detect mime-type if already provided
     if mime_type != None and type(mime_type) == str:
         return mime_type
     
@@ -18,6 +19,10 @@ def get_mime_type(mime_type: Union[str, None], filename: Union[str, None], file:
     if type(file) == PosixPath:
         return mimetypes.guess_type(str(file))[0]
 
+    if type(file) == str:
+        return mimetypes.guess_type(file)[0]
+
+    # guard
     if filename == None:
         return None
 
