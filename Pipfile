@@ -5,6 +5,8 @@ name = "pypi"
 
 [packages]
 starlette = "*"
+numpy = "*"
+opencv-python = "*"
 
 [dev-packages]
 setuptools = "*"

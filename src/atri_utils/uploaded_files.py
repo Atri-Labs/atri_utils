@@ -1,0 +1,29 @@
+from io import BufferedReader, TextIOWrapper
+from typing import BinaryIO
+import numpy as np
+import cv2
+import os
+
+
+def parse_uploaded_file(file: [bytes, BinaryIO, BufferedReader, str, TextIOWrapper]):
+    print(type(file))
+    if type(file) is None:
+        return None
+
+    if type(file) == bytes:
+        p = np.frombuffer(file, np.uint8)
+        return cv2.imdecode(p, cv2.IMREAD_COLOR)
+
+    # this refers to file_name
+    if type(file) == str:
+        return cv2.imread(os.path.dirname(os.path.realpath(__file__)) + '/' + file)
+
+    if type(file) == BufferedReader:
+        p = np.frombuffer(file.read(), np.uint8)
+        return cv2.imdecode(p, cv2.IMREAD_COLOR)
+
+
+
+
+
+
