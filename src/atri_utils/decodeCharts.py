@@ -3,6 +3,13 @@ from typing import Union
 
 
 def parse_charts(data: Union[pd.DataFrame, list], type_chart: str, **args):
+    """
+    data: It is either a DataFrame(bar) or list of DataFrames(scatter)
+    type_chart: It can currently have values 'bar', 'scatter'
+    **args : currently can accept x, y, z
+
+    returns based on a type_chart either an array of dict's (bar) or array of array of dict's (scatter)
+    """
     def helper_parse_charts(df: pd.DataFrame):
         columns = set(df.columns)
         if args['x'] in columns:

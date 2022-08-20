@@ -7,6 +7,13 @@ from typing import Union
 
 
 def parse_uploaded_file(file: Union[bytes, BinaryIO, BufferedReader, str, TextIOWrapper]):
+    """
+    This functions returns a numpy.ndarray(3D-Array) from the image uploaded
+    if file passed is None it returns None
+    if file type is str (currently expects the file_name is passed)
+
+
+    """
     print(type(file))
     if type(file) is None:
         return None
