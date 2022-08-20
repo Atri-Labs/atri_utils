@@ -3,9 +3,10 @@ from typing import BinaryIO
 import numpy as np
 import cv2
 import os
+from typing import Union
 
 
-def parse_uploaded_file(file: [bytes, BinaryIO, BufferedReader, str, TextIOWrapper]):
+def parse_uploaded_file(file: Union[bytes, BinaryIO, BufferedReader, str, TextIOWrapper]):
     print(type(file))
     if type(file) is None:
         return None
