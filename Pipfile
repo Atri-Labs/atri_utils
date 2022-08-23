@@ -8,6 +8,7 @@ starlette = "*"
 numpy = "*"
 opencv-python = "*"
 pandas = "*"
+pytest = "*"
 
 [dev-packages]
 setuptools = "*"
