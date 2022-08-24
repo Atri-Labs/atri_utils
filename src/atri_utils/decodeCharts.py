@@ -2,7 +2,7 @@ import pandas as pd
 from typing import Union
 
 
-def parse_charts(data: Union[pd.DataFrame, list], type_chart: str, **args):
+def parse_charts_data(data: Union[pd.DataFrame, list], type_chart: str, **args):
     """
     data: It is either a DataFrame(bar) or list of DataFrames(scatter)
     type_chart: It can currently have values 'bar', 'scatter', 'line', 'area', 'histogram', 'candlestick', 'pie'
@@ -78,9 +78,38 @@ def parse_charts(data: Union[pd.DataFrame, list], type_chart: str, **args):
         return data_processed
     elif type_chart == 'pie':
         data_processed = [pie_charts_helper(data)]
-        if 'OuterData' in set(args.keys()):
-            data_processed.append(pie_charts_helper(args['OuterData']))
+        if 'outerData' in set(args.keys()):
+            data_processed.append(pie_charts_helper(args['outerData']))
         return data_processed
+
+
+def parse_charts_options(**args):
+    pass
+
+
+def draw_charts(chart, data: Union[pd.DataFrame, list], type_chart: str, **kwargs):
+    chart.custom.data = parse_charts_data(data=data, type_chart=type_chart, **kwargs)
+    if type_chart == 'pie' and 'outerData' in set(kwargs.keys()):
+        chart.custom.options = [
+                    # options for first circle
+                    {
+                        "cx": "50%",            # center of the circle's x
+                        "cy": "50%",            # center of the circle's y
+                        "outerRadius": "40%",   # radius of the circle
+                        "showLabel": True,
+                        "animate": False,
+                    },
+                    # options for second circle
+                    {
+                        "cx": "50%",
+                        "cy": "50%",
+                        "innerRadius": "65%",
+                        "showLabel": True,
+                        "animate": False,
+                    },
+                    ]
+
+
 
 
 
