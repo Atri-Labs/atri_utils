@@ -5,12 +5,20 @@ from typing import Union
 def parse_charts(data: Union[pd.DataFrame, list], type_chart: str, **args):
     """
     data: It is either a DataFrame(bar) or list of DataFrames(scatter)
-    type_chart: It can currently have values 'bar', 'scatter'
-    **args : currently can accept x, y, z
+    type_chart: It can currently have values 'bar', 'scatter', 'line', 'area', 'histogram', 'candlestick', 'pie'
+    **args : currently can accept x, y, z, name, value, OuterData
+    x value is to be specified for type_chart == 'bar' if the column you want to see on th x-axis is not named x
+    x, y, z values are to be specified when type_chart == 'scatter' if the DataFrame does not already contain these columns
+    name, value are to specified only when type_chart == 'pie' giving information about column containing the name and the respective value
+    OuterData is to specified only when type_chart == 'pie' and you want an Outer pie chart surroeding the inner Chart OuterData is of type pd.DataFrame
 
     returns based on a type_chart either an array of dict's (bar) or array of array of dict's (scatter)
     """
-    def helper_parse_charts(df: pd.DataFrame):
+    def scatter_charts_helper(df: pd.DataFrame):
+        """
+        It's a helper function to parse a DataFrame and rename columns specified to x, y, z
+        To easily return the Data required by the Scatter Chart instance
+        """
         columns = set(df.columns)
         if args['x'] in columns:
             df.rename(columns={args['x']: 'x'}, inplace=True)
@@ -24,7 +32,11 @@ def parse_charts(data: Union[pd.DataFrame, list], type_chart: str, **args):
                 'Either x,y,z values were not passed or the DataFrame passed does not contain columns x,y,z')
         return df.to_dict(orient='records')
 
-    def helper_parse_charts_2(df: pd.DataFrame):
+    def pie_charts_helper(df: pd.DataFrame):
+        """
+        It's a helper function to parse a DataFrame and rename columns specified to name, value
+        To easily return the Data required by the Pie Chart instance
+        """
         if 'name' not in set(df.columns):
             df.rename(columns={args['name']: 'name'}, inplace=True)
         if 'value' not in set(df.columns):
@@ -40,9 +52,9 @@ def parse_charts(data: Union[pd.DataFrame, list], type_chart: str, **args):
         data_processed = []
         if type(data) == list:
             for d in data:
-                data_processed.append(helper_parse_charts(d))
+                data_processed.append(scatter_charts_helper(d))
         else:
-            data_processed.append(helper_parse_charts(data))
+            data_processed.append(scatter_charts_helper(data))
         return data_processed
     elif type_chart == 'histogram':
         if 'x' not in set(data.columns):
@@ -65,10 +77,9 @@ def parse_charts(data: Union[pd.DataFrame, list], type_chart: str, **args):
             data_processed.append(dic)
         return data_processed
     elif type_chart == 'pie':
-        data_processed = []
-        data_processed.append(helper_parse_charts_2(data))
-        if 'data2' in set(args.keys()):
-            data_processed.append(helper_parse_charts_2(args['data2']))
+        data_processed = [pie_charts_helper(data)]
+        if 'OuterData' in set(args.keys()):
+            data_processed.append(pie_charts_helper(args['OuterData']))
         return data_processed
 
 
