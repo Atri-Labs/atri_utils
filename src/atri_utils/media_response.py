@@ -84,7 +84,6 @@ def create_media_response(
     It returns None, if the type of file is unsupported.
     """
     detected_mime_type = get_mime_type(mime_type, filename, file)
-    print(detected_mime_type)
 
     if detected_mime_type == None:
         return None

@@ -14,7 +14,6 @@ def parse_uploaded_file(file: Union[bytes, BinaryIO, BufferedReader, str, TextIO
 
 
     """
-    print(type(file))
     if type(file) is None:
         return None
 
