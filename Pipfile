@@ -9,6 +9,8 @@ numpy = "*"
 opencv-python = "*"
 pandas = "*"
 pytest = "*"
+rembg = "*"
+pillow = "*"
 
 [dev-packages]
 setuptools = "*"
