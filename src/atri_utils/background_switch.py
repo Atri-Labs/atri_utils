@@ -6,10 +6,7 @@ import numpy as np
 from .uploaded_files import parse_uploaded_file
 
 
-def remove_background(img: Union[bytes, Image, str]) -> Image:
-    if type(img) == Image:
-        output = remove(img)
-        return output
+def remove_background(img):
     if type(img) == bytes:
         input_img = Image.fromarray(np.uint8(cv2.cvtColor(parse_uploaded_file(img), cv2.COLOR_RGB2BGR)))
         output = remove(input_img)
@@ -19,14 +16,15 @@ def remove_background(img: Union[bytes, Image, str]) -> Image:
             input_img = i.read()
             output = remove(input_img)
             return output
+    output = remove(img)
+    return output
 
 
-def change_background(img:Union[bytes, Image, str], back_img: Union[bytes, Image, str]) -> Image:
+def change_background(img, back_img):
     back_removed_img = remove_background(img)
+    back = img
     if type(back_img) == bytes:
         back = Image.fromarray(np.uint8(cv2.cvtColor(parse_uploaded_file(back_img), cv2.COLOR_RGB2BGR)))
-    if type(back_img) == Image:
-        back = img
     if type(back_img) == str:
         with open(img, 'rb') as i:
             back = i.read()
