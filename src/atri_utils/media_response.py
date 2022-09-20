@@ -1,4 +1,8 @@
+import os
 from typing import Union
+
+import cv2
+import numpy as np
 from starlette.datastructures import UploadFile
 from io import BufferedReader, TextIOWrapper
 from typing import BinaryIO
@@ -6,7 +10,7 @@ import mimetypes
 import base64
 from pathlib import PosixPath, WindowsPath
 
-ACCEPTED_FILETYPES = Union[BinaryIO, BufferedReader, TextIOWrapper, str, UploadFile, bytes, PosixPath, WindowsPath]
+ACCEPTED_FILETYPES = Union[BinaryIO, BufferedReader, TextIOWrapper, str, UploadFile, bytes, PosixPath, WindowsPath, np.ndarray]
 
 def get_mime_type(mime_type: Union[str, None], filename: Union[str, None], file: ACCEPTED_FILETYPES) -> str:
     # guard - Do not auto-detect mime-type if already provided
@@ -110,7 +114,10 @@ def create_media_response(
 
     elif type(file) == PosixPath or type(file) == WindowsPath:
         data = extract_from_path(file, encoding)
-
+    elif type(file) == np.ndarray:
+        cv2.imwrite('assets/img.jpeg', file)
+        data = extract_from_filename("assets/img.jpeg", encoding)
+        os.remove("assets/img.jpeg")
     else:
         return None
 
