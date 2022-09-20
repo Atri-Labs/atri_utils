@@ -6,7 +6,7 @@ import numpy as np
 from .uploaded_files import parse_uploaded_file
 
 
-def remove_background(img: Union[bytes, Image, str]) -> Image:
+def remove_background(img):
     if type(img) == Image:
         output = remove(img)
         return output
@@ -21,7 +21,7 @@ def remove_background(img: Union[bytes, Image, str]) -> Image:
             return output
 
 
-def change_background(img:Union[bytes, Image, str], back_img: Union[bytes, Image, str]) -> Image:
+def change_background(img, back_img):
     back_removed_img = remove_background(img)
     if type(back_img) == bytes:
         back = Image.fromarray(np.uint8(cv2.cvtColor(parse_uploaded_file(back_img), cv2.COLOR_RGB2BGR)))

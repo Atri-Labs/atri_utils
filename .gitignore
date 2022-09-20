@@ -4,4 +4,5 @@ eggs/
 .eggs/
 *.egg-info/
 *.egg
+.idea/*
 __pycache__
