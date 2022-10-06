@@ -1,7 +1,14 @@
-from rembg import remove
+try:
+    from rembg import remove
+except ImportError:
+    print('Please install rembg to use this utility...')
+
 from PIL import Image
 from typing import Union
-import cv2
+try:
+    import cv2
+except ImportError:
+    print('Please install opencv-python to use this utility...')
 import numpy as np
 from .uploaded_files import parse_uploaded_file
 

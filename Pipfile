@@ -6,10 +6,8 @@ name = "pypi"
 [packages]
 starlette = "*"
 numpy = "*"
-opencv-python = "*"
 pandas = "*"
 pytest = "*"
-rembg = "*"
 pillow = "*"
 
 [dev-packages]
