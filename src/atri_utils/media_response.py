@@ -1,7 +1,7 @@
 import os
 from typing import Union
 
-import cv2
+
 import numpy as np
 from starlette.datastructures import UploadFile
 from io import BufferedReader, TextIOWrapper
@@ -115,6 +115,11 @@ def create_media_response(
     elif type(file) == PosixPath or type(file) == WindowsPath:
         data = extract_from_path(file, encoding)
     elif type(file) == np.ndarray:
+        try:
+            import cv2
+        except ImportError:
+            print('Please install opencv-python to use this utility...')
+            return None
         cv2.imwrite('assets/img.jpeg', file)
         data = extract_from_filename("assets/img.jpeg", encoding)
         os.remove("assets/img.jpeg")

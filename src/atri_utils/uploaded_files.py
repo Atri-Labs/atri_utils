@@ -1,7 +1,10 @@
 from io import BufferedReader, TextIOWrapper
 from typing import BinaryIO
 import numpy as np
-import cv2
+try:
+    import cv2
+except ImportError:
+    print('Please install opencv-python to use this utility...')
 import os
 from typing import Union
 
